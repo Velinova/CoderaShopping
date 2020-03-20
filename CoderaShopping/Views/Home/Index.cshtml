@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Codera Cat Shop</title>
+    <script src="https://kit.fontawesome.com/387d9c93de.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .navbar li a {
+            font-size: 12pt;
+        }
+
+        .navbar-brand {
+            font-size: 16pt;
+        }
+    </style>
+</head>
+<body ng-app="codera.shopping">
+    
+    <img class="paws" src="~/Content/paws.png" />
+
+    <nav class="navbar navbar-default" id="navigationBar" style="margin-top : 30px; margin-bottom:30px;" ng-controller="indexController">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span id="navbarspan"><a class="navbar-brand" ui-sref-opts="{reload:true}" ui-sref="home" style="font-weight:bold;">CODERA CAT SHOP</a></span>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right" ng-if="user"  >
+                        <li uib-dropdown auto-close="outsideClick">
+                            <a uib-dropdown-toggle id="nav-dropdown"><span class="glyphicon glyphicon-user"></span><span>  Hi,</span> {{user.Name}}   <span class="glyphicon glyphicon-chevron-down" style="font-size:10px"></span></a>
+                            <ul id="nav-dropdown-body" class="dropdown-menu menu-down" uib-dropdown-menu role="menu"  ng-if="user" >
+                                <li role="menuitem" ng-if="user.Role==1">
+                                    <a>
+                                        <span ng-click="statusToggle()">Admin Panel 
+                                            <span style="font-size:10px" ng-class="{'glyphicon-chevron-up':dropdownStatus,'glyphicon-chevron-down':!dropdownStatus}" class="glyphicon pull-right" ></span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li ng-show="dropdownStatus && user.Role==1" role="menuitem"><a ui-sref="admin-panel({id:0})">Orders</a> </li>
+                                <li ng-show="dropdownStatus && user.Role==1" role="menuitem"><a ui-sref="admin-panel({id:1})">Users </a> </li>
+                                <li ng-show="dropdownStatus && user.Role==1" role="menuitem"><a ui-sref="admin-panel({id:2})">Products</a> </li>
+                                <li ng-show="dropdownStatus && user.Role==1" role="menuitem"><a ui-sref="admin-panel({id:3})">Categories</a> </li>
+                                <li ng-show="dropdownStatus && user.Role==1" role="menuitem"><a ui-sref="admin-panel({id:4})">Manufacturers</a> </li>
+                                                            
+                                <li role="menuitem"><a ui-sref="myorders">My orders</a></li>
+                                <li class="divider" style="height:0px; margin-bottom:0px; margin-top:0px; padding:1px; background-color:seashell"></li>
+                                <li role="menuitem"><a ng-click="signOut()"><span class="glyphicon-log-out glyphicon"></span>      Sign out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul style="float: right; color: white !important;" class="nav navbar-nav">
+                        <li><a ui-sref="signin" ng-if="!user"><span class="glyphicon-log-in glyphicon"></span> Sign in</a></li>
+                    </ul>
+                    
+
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </div>
+    </nav>
+    
+<div ui-view></div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/vendor")
+@Scripts.Render("~/bundles/app")
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">×</button>
+    <h3 class="modal-title" id="modal-title">{{ model.Id ? "Update category" : "Create new category" }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form name="form">
+        <div class="form-group">
+            <label for="name">Name <span class="text-danger">*</span></label>
+            <input required name="name" ng-model="model.Name" type="text" class="form-control" id="name" placeholder="Category Name">
+            <p class="text-danger" ng-if="submitted && form.name.$invalid">This field is required</p>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="model.Status">
+                Status
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="model.IsDefault">
+                Is Default
+            </label>
+        </div>
+        
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="pull-right">
+        <button class="btn btn-default" type="button" ng-click="submit(form)">{{ model.Id ? "Update" : "Create" }}</button>
+        <button class="btn btn-default" type="button" ng-click="close()">Cancel</button>
+    </div>
+</div>
+   
+   
+

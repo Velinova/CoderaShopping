@@ -1,0 +1,90 @@
+﻿<div class="container" style="padding:0px; background-color:seashell;">
+    <h2>My orders</h2>
+    <br />
+    <div class="search-bar">
+        <div class="col-md-12 " style="font-weight:lighter!important;">
+            <b style="font-size:14pt; display:inline; margin-top:10px; margin-right: 10px;" class="pull-left"> Search by:  </b>
+            <button class="btn sort-date" ng-click="all()">All orders</button>
+            <button class="btn sort-date" ng-click="newest()">Newest to oldest</button>
+            <button class="btn sort-date" ng-click="oldest()">Oldest to newest</button>
+            <button class="btn sort-delivered" ng-click="delivered()">Delivered</button>
+            <button class="btn sort-paid" ng-click="paid()">Paid</button>
+            <button class="btn sort-shipped" ng-click="shipped()">Shipped</button>
+            <button class="btn sort-frozen" ng-click="frozen()">Frozen</button>
+            <button class="btn sort-disputed" ng-click="disputed()">Disputed</button>
+            <button class="btn sort-canceled" ng-click="canceled()">Canceled</button>
+        </div>
+    </div>
+    <br />
+    <div ng-repeat="order in myorders" style="background-color: white; padding:20px; margin-bottom:15px; border-radius: 8px;" class="order">
+        <div class="order-container" ng-class="{'canceled': order.Status == 'Canceled' , 'disputed': order.Status == 'Disputed',
+              'frozen': order.Status == 'Frozen', 'shipped': order.Status == 'Shipped', 'paid': order.Status == 'Paid', 'delivered': order.Status == 'Delivered' } ">
+            <div style="font-size:larger">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="opacity:0.5; margin-bottom:10px;">Order ID: {{order.Id}}</div>
+                        <div style="background-color: whitesmoke;border-radius:2px; padding: 15px 0px; margin: 20px;">
+                            <div class="col-md-12"><b>Date ordered:</b>   {{order.DateOrdered}}</div>
+                            <div class="col-md-12" ng-if="order.Status == 'Delivered'"><b>Date delivered:</b>   {{order.DateDelivered}}</div>
+                            <div class="col-md-12" style="margin-bottom: 4px;"><b>Status:</b>   {{order.Status}}</div>
+                            <div class="col-md-12"><b style="margin-top:3px; border-radius:5px;">Items: <span class="label label-default control-label">{{order.Items.length}}</span></b></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right" style="padding-right:20px; ">
+                            <button class="btn btn-default btn-my-orders" ng-click="showRatingPanel(order.Id)" ng-if="order.Status == 'Delivered' || order.Status == 'Disputed'">Rate & add review</button>
+                            <button class="btn btn-default btn-my-orders" ng-click="confirmOrder(order)" ng-hide="!(order.Status == 'Shipped')"><span class="glyphicon glyphicon-ok"></span>  Confirm delivery</button>
+                            <button class="btn btn-default btn-my-orders" ng-click="cancelOrder(order)" ng-hide="!(order.Status == 'Paid')"><span class="glyphicon glyphicon-remove"></span>  Cancel order</button>
+                            <button class="btn btn-default btn-my-orders" ng-click="disputeOrder(order)" ng-hide="!(order.Status == 'Delivered')"><span class="glyphicon glyphicon-thumbs-down"></span>  Dispute order</button>
+                            <button class="btn btn-default btn-my-orders" ng-click="repeatOrder(order)" title="Order this items again."><span class="glyphicon glyphicon-shopping-cart" style="color:darkred"></span> Add to cart</button>
+                        </div>
+                        <!--<div uib-alert ng-class="alert-danger" ng-if="repeatOrderResult">You can't repeat this order because some of the products are out of stock."</div>
+                        <div uib-alert ng-class="alert-success" ng-if="!repeatOrderResult">Order items successfully added in your shopping cart."</div>-->
+                        <!--rating-->
+                        <div class="rating-panel" ng-show="ratingPanelShow && ratingObjectId == order.Id" style="margin-top:43px;">
+                            <form>
+                                <div class="row" style="margin-left:30px;">
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea ng-model="model.Comment" rows="1" style="min-width:90%; resize: vertical;" placeholder="Add comment" type="text" id="comment" name="comment" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom:20px;">
+                                        <div class="col-md-6">
+                                            Stars:<div uib-rating ng-model="model.Value" max="5" read-only="false" on-hover="hoveringOver(value)" on-leave="overStar = null"
+                                                       titles="['terrible','poor','average', 'good', 'excellent']" style="font-size: 15pt;color:dimgray; display:inline; margin-left:5px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-success pull-right" type="submit" ng-click="addReview()" style="margin-right:60px;"> Submit </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class=" table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in order.Items">
+                            <td class="col-md-8">{{item.Product.Name}}</td>
+                            <td class="col-md-4">{{item.Quantity}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>

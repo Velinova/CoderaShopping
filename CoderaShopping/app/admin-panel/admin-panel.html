@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <ul class="nav nav-tabs admin-panel-tabs" style="font-size:larger;">
+        <li ng-repeat='tab in tabs' ng-click="activeTab = tab.Index"  ui-sref ="admin-panel({id:tab.Index})" ng-class="{'active-tab': tab.Index == activeTab}">
+            {{tab.Header}}
+        </li>
+    </ul>
+        <div class='codera-tab-content' style="margin-top:30px;">
+            <div ng-switch="activeTab">
+                <div ng-switch-when='0'>
+                    <orders></orders>
+                </div>
+                <div ng-switch-when='1'>
+                    <users></users>
+                </div>
+                <div ng-switch-when='2'>
+                    <products></products>
+                </div>
+                <div ng-switch-when='3'>
+                    <categories></categories>
+                </div>
+                <div ng-switch-when='4'>
+                    <manufacturers></manufacturers>
+                </div>
+            </div>
+        </div>
+    
+</div>

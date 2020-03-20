@@ -1,0 +1,38 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">×</button>
+    <h3 class="modal-title" id="modal-title">{{ model.Id ? "Update manifacturer" : "Add new manifacturer" }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form name="form">
+        <div class="form-group">
+            <label for="name">Name <span class="text-danger">*</span></label>
+            <input required name="name" ng-model="model.Name" type="text" class="form-control" id="name" placeholder="Manifacturer name">
+            <p class="text-danger" ng-if="submitted && form.name.$invalid">This field is required</p>
+        </div>
+        <div class="form-group">
+            <label for="city">City <span class="text-danger">*</span></label>
+            <input required name="city" ng-model="model.City" type="text" class="form-control" id="city" placeholder="Manifacturer city">
+            <p class="text-danger" ng-if="submitted && form.city.$invalid">This field is required</p>
+        </div>
+        <div class="form-group">
+            <label for="country">Country <span class="text-danger">*</span></label>
+            <input required name="country" ng-model="model.Country" type="text" class="form-control" id="country" placeholder="Manifacturer country">
+            <p class="text-danger" ng-if="submitted && form.country.$invalid">This field is required</p>
+        </div>
+        <div class="form-group">
+            <label for="address">Address <span class="text-danger">*</span></label>
+            <input required name="address" ng-model="model.Address" type="text" class="form-control" id="address" placeholder="Manifacturer address">
+            <p class="text-danger" ng-if="submitted && form.address.$invalid">This field is required</p>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="pull-right">
+        <button class="btn btn-default" type="button" ng-click="submit(form)">{{ model.Id ? "Update" : "Create" }}</button>
+        <button class="btn btn-default" type="button" ng-click="close()">Cancel</button>
+    </div>
+</div>
+   
+   
+

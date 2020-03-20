@@ -1,0 +1,76 @@
+﻿<div class="container gridView">
+    <div class="action-panel col-md-12" style="height: 50px;">
+        <div class="row">
+            <select name="user"
+                    id="user"
+                    class="form-control required pull-left"
+                    ng-required="true"
+                    ng-options="user.Name for user in users track by user.Id"
+                    ng-model="selectedUser"
+                    ng-click="fetchData()"
+                    style="margin-left:20px;"
+                    ng-disabled="disableAll">
+
+                <option selected disabled value="">-- List orders by user --</option>
+            </select>
+            <select name="status"
+                    id="status"
+                    class="form-control required pull-left"
+                    ng-required="true"
+                    ng-click="fetchData()"
+                    ng-options="status.value as status.value for status in statusDictionary"
+                    ng-model="selectedStatus"
+                    style="margin-left:20px;"
+                    ng-disabled="disableAll">
+
+                <option selected disabled value="">-- List orders by status --</option>
+            </select>
+            <button ng-click="listAllOrders()"
+                    class="btn btn-default pull-left" ng-disabled="disableAll" style="margin-left:20px;">
+                All orders
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        
+        <br />
+        <table class="table" table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>User Surname</th>
+                    <th>Status</th>
+                    <th>Date ordered</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orders | filter: (selectedUser == null || selectedStatus == null )? '' : {User: selectedUser, Status: selectedStatus}" >
+                    <td class="col-md-2"><span style="margin-right:15px; color:saddlebrown" ng-click="showOrderItems(order)">   </span>{{order.User.Name}}</td>
+                    <td class="col-md-2">{{order.User.Surname}}</td>
+                    <td class="col-md-2" ng-if="orderToUpdate == null || (orderToUpdate != null && orderToUpdate != order)"><div class="label" ng-class="{'label-canceled': order.Status == 'Canceled' , 'label-disputed': order.Status == 'Disputed',
+              'label-frozen': order.Status == 'Frozen', 'label-shipped': order.Status == 'Shipped', 'label-paid': order.Status == 'Paid', 'label-delivered': order.Status == 'Delivered' }">{{order.Status}}</div ></td>
+                    <td class="col-md-2" ng-if="orderToUpdate != null && orderToUpdate == order">
+                        <select class="form-control" ng-model="order.Status" ng-options="status.key as status.value for status in statusDictionary" ng-required="true">
+                            <option selected disabled value="">-- Status --</option>
+                        </select>
+                    </td>
+                    <td class="col-md-3">{{order.DateOrdered}}</td>
+                    <td class="col-md-3" ng-if="orderToUpdate == null ">
+                        <button class="btn btn-default" ng-click="changeStatus(order)"><span class="glyphicon glyphicon-edit"></span> Edit status</button>
+                        <button class="btn btn-default" ng-click="openOrderDetails(order.Id)"><span class="glyphicon glyphicon-list-alt"></span>  Details</button>
+                    </td>
+                    <td class="col-md-3" ng-if="orderToUpdate != null && orderToUpdate != order">
+                        <button class="btn btn-default" ng-disabled="disableAll"><span class="glyphicon glyphicon-file"></span> Edit status</button>
+                        <button class="btn btn-default" ng-disabled="disableAll" ng-click="openOrderDetails(order.Id)"><span class="glyphicon glyphicon-list-alt"></span>  Details</button>
+                    </td>
+                    <td class="col-md-3" ng-if="orderToUpdate == order">
+                        <button class="btn btn-default" ng-click="updateStatus(order)"><span class="glyphicon glyphicon-file"></span> Update</button> 
+                        <button class="btn btn-default" ng-disabled="disableAll" ng-click="openOrderDetails(order.Id)"><span class="glyphicon glyphicon-list-alt"></span>  Details</button>
+                    </td>
+                </tr>
+                       
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿<div class="container gridView" >
+    <div class="col-md-12">
+        <br />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Role</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td class="col-md-2">{{user.UserName}}</td>
+                    <td class="col-md-2">{{user.Email}}</td>
+                    <td class="col-md-2">{{user.Name}}</td>
+                    <td class="col-md-2">{{user.Surname}}</td>
+                    <td class="col-md-2">
+                        <div class="label" ng-class="user.Role == 1 ? 'label-primary': 'label-default'" style="width: 50px; padding:5px;">
+                            {{ user.Role == 1 ? 'ADMIN' : 'USER'}}
+                        </div>
+                    </td>
+                    <td><button ng-click="summonChangeRoleDialog(user.Id)" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-user"></span>  Change role</button></td>
+                    <td title="{{ user.Id == cookieId ? 'You cannot remove yourself' : '' }}"><button ng-click="summonDeleteDialog(user.Id)" class="btn btn-sm btn-danger" ng-disabled="user.Id == cookieId"><span class="glyphicon glyphicon-trash"></span>  Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

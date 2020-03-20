@@ -1,0 +1,146 @@
+﻿<div class="modal-header" style="padding-bottom:0px!important;">
+    <button type="button" class="close" ng-click="cancel()">×</button>
+
+    <ul class="nav nav-tabs" id="tabContent">
+        <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+        <li><a href="#networking" data-toggle="tab">Reviews</a></li>
+    </ul>
+</div>
+
+
+
+<div class="tab-content">
+    <div class="tab-pane active" id="details">
+        <!--Details tab-->
+        <div class="row" style="background-color:transparent !important;">
+            <div class="col-md-5" style="padding:30px;">
+                <img src="http://placeimg.com/640/320/nature/grayscale" class="img-responsive img-thumbnail" style="display:block; margin-bottom:20px;">
+            </div>
+            <div class="col-md-7" style="padding:30px;">
+                <p><b style="font-size: 14pt;">{{product.Name}}</b></p>
+                <p style="font-size:larger;"><span>{{product.Description}}</span></p>
+                <p style="font-size:larger;"><b>Brand: </b><span>{{product.Manifacturer.Name}}</span></p>
+                <p ng-if="product.Quantity>0" style="color:forestgreen; font-size:larger;"><span class="glyphicon glyphicon-ok" ></span>In stock</p>
+                <p ng-if="product.Quantity==0" style="color:darkred; font-size:larger;"><span class="glyphicon glyphicon-remove" ></span>Out of stock</p>
+                <br />
+                <span uib-rating ng-model="rate" max="5" read-only="true" on-hover="hoveringOver(value)" on-leave="overStar = null"
+                      titles="['terrible','poor','average', 'good', 'excellent']" style="font-size: 18pt; color:dimgray"></span><span ng-if="rate != 0">Stars: {{rate}}</span><div ng-if="rate == 0" style="margin-bottom:6px;">  No reviews</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="tab-pane" id="networking">
+        <!--Reviews tab-->
+        <br />
+        <div class="row" style="text-align:center;">
+            <div uib-rating ng-model="rate" max="5" read-only="true" on-hover="hoveringOver(value)" on-leave="overStar = null"
+                 titles="['terrible','poor','average', 'good', 'excellent']" style="font-size: 25pt;color:dimgray">
+            </div><span ng-if="rate != 0">{{rate}} average rating</span>
+            <div ng-if="rate == 0" style="margin-bottom:6px;">  No reviews</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding:50px; text-align:center; padding-top: 35px">
+                <div class="avrerage-rating" style="font-size:50pt; padding-left:35px;">
+                    {{rate | number: 1}}
+                </div>
+                <div class="people-rating">
+                    <span class="glyphicon glyphicon-user" style="font-size:13pt;margin-left:50px;">{{rateValues.Total}}</span>
+                </div>
+                <br />
+                <button class="btn btn-success" ng-click="showRatingForm()" style="margin-left:-10px;" ng-if="addRating == false && user!=null" >Submit Rating & Review</button>
+                <button class="btn btn-info" ng-click="showAllRatings()" style="margin-left:-10px;" ng-if="addRating == true">View Ratings & Reviews</button>
+            </div>
+            <div class="col-md-7" style="margin-left:40px; padding:35px; padding-right:40px; color:darkgray; border-left: 1px solid lightgray;">
+                <div class="row">
+                    <div>5 stars<uib-progressbar class="progress-striped pull-right" value="percentages.Five" type="excellent" style="width:80%"></uib-progressbar></div>
+                </div>
+                <div class="row">
+                    <div>4 stars<uib-progressbar class="progress-striped pull-right" value="percentages.Four" type="good" style="width:80%"></uib-progressbar></div>
+                </div>
+                <div class="row">
+                    <div>3 stars<uib-progressbar class="progress-striped pull-right" value="percentages.Three" type="average" style="width:80%"></uib-progressbar></div>
+                </div>
+                <div class="row">
+                    <div>2 stars<uib-progressbar class="progress-striped pull-right" value="percentages.Two" type="poor" style="width:80%"></uib-progressbar></div>
+                </div>
+                <div class="row">
+                    <div>1 stars<uib-progressbar class="progress-striped pull-right" value="percentages.One" type="terrible" style="width:80%"></uib-progressbar></div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <!--ratings-->
+        <div class="row" ng-if="addRating == false">
+            <div class="col-md-12" style="margin-right:30px; margin-left:30px;">
+                <h4>View Ratings & Reviews</h4>
+                <br />
+            </div>
+            <div class="ratings-container">
+                <div class="row" ng-repeat="rating in ratings" style=" margin-bottom:30px;">
+                    <div class="col-md-2" style="padding:0px !important;">
+                        <div class="media-left pull-left">
+                            <a href="#">
+                                <img class="media-object img-responsive pull-left" src="http://placeimg.com/640/320/nature/grayscale" style="border-radius:50% ;height:80px; width:80px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="media-body " style="padding-right:30px;">
+                            <h4 class="media-heading" ng-if="rating.ShowName == false">{{rating.User.UserName}}</h4>
+                            <h4 class="media-heading" ng-if="rating.ShowName == true">Anonymous</h4>
+                            <div uib-rating ng-model="rating.Value" max="5" read-only="true" style="font-size: 15pt;color:dimgray" titles="['terrible','poor','average', 'good', 'excellent']" >
+                            </div>
+                            <p>{{rating.Comment}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <!--submit rate-->
+        <form>
+            <div class="row" ng-if="addRating == true" style="margin-left:30px;">
+                <div class="row">
+                    <div class="col-md-12" style="margin-right:30px;">
+                        <h4>Submit Rating & Review</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="addmodel.ShowName">
+                                don't show my name
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 style="display:inline;font-size: 13pt;">Stars:  </h5>
+                        <div uib-rating ng-model="addmodel.Value" max="5" read-only="false" on-hover="hoveringOver(value)" on-leave="overStar = null"
+                             titles="['terrible','poor','average', 'good', 'excellent']" style="font-size: 15pt;color:dimgray; display:inline; margin-left:5px;">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="comment">Add comment:</label>
+                            <textarea ng-model="addmodel.Comment" rows="5" style="min-width:90%; resize: vertical;" type="text" id="comment" name="comment" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom:30px;">
+                        <button class="btn btn-success pull-left" type="submit" ng-click="submitRating()"> Submit rating </button>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>

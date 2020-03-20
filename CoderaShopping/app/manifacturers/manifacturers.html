@@ -1,0 +1,30 @@
+﻿<div class="container gridView" >
+    <span class="action-panel col-md-12">
+        <button ng-click="summonCreateDialog()" class="btn btn-primary pull-right" style="margin-right:30px;"><i class="glyphicon glyphicon-plus"></i> Create</button>
+    </span>
+    <div class="col-md-12">
+        <br />
+        <table class="table" >
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Address</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="manifacturer in manifacturers">
+                    <td class="col-md-3">{{manifacturer.Name}}</td>
+                    <td class="col-md-3">{{manifacturer.City}}</td>
+                    <td class="col-md-3">{{manifacturer.Country}}</td>
+                    <td class="col-md-3">{{manifacturer.Address}}</td>
+                    <td><button ng-click="summonEditDialog(manifacturer.Id)" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</button></td>
+                    <td><button ng-click="summonDeleteDialog(manifacturer.Id)" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

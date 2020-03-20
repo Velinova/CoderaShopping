@@ -1,0 +1,40 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">×</button>
+    <h3 class="modal-title" id="modal-title">Add order item to cart</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row" ng-if="canOrder">
+        <div class="col-md-6">
+            <!--<div>{{product.Image}}</div>-->
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div style="font-size:12pt;"><b>{{product.Name}}</b></div>
+                <div style="font-size:12pt;"><b>{{product.Price | currency: "€"}} </b></div>
+            </div>
+            
+            <div class="row">
+                <!--<div class="col-group">
+                    <button class="btn pull-right" ng-click="increase(quantity)"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+                <div class="col-group">
+                    <input type="number" min="0" class="form-control" max="{{product.Quantity}}" ng-model="quantity" />
+                </div>
+                <div class="col-group">
+                    <button class="btn" ng-click="decrease(quantity)"><span class="glyphicon glyphicon-minus"></span></button>
+                </div>-->
+
+                <div class="value-button" id="decrease" ng-click="increase(quantity)" value="Decrease Value"><div class="glyphicon glyphicon-plus" style="margin-bottom:5px;"></div></div>
+                <input type="number" min="1" id="number" class="form-control" max="{{product.Quantity}}" ng-model="quantity" />
+                <div class="value-button" id="increase" ng-click="decrease(quantity)" value="Increase Value"><div class="glyphicon glyphicon-minus" style="margin-bottom:5px;"></div></div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!canOrder" style="font-size:12pt;"> Product <b>{{product.Name}}</b> is out of stock. <p class="text-danger " style="font-size:12pt;" >You can not make order.</p></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="add()" ng-if="canOrder">Add item</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()" ng-if="canOrder">Cancel</button>
+
+    <button class="btn btn-default" type="button" ng-click="cancel()" ng-if="!canOrder">Close</button>
+</div>
